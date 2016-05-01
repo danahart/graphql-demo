@@ -1,0 +1,38 @@
+{
+  "1": {
+    "id": "1",
+    "name": "Dan",
+    "lastname": "Smith",
+    "address":{
+        "street": "123 Circle Dr",
+        "city": "Milwaukee",
+        "state": "Wisconsin",
+        "zip": "55555",
+        "phone": "414-111-2222"
+    }
+  },
+  "2": {
+    "id": "2",
+    "name": "Marie",
+    "lastname": "May",
+    "address":{
+        "street": "444 Rectangle Dr",
+        "city": "Madison",
+        "state": "Wisconsin",
+        "zip": "57000",
+        "phone": "608-333-4444"
+    }
+  },
+  "3": {
+    "id": "3",
+    "name": "Jessie",
+    "lastname": "James",
+    "address":{
+        "street": "567 Tech Way",
+        "city": "Green Bay",
+        "state": "Wisconsin",
+        "zip": "599999",
+        "phone": "262-777-8888"
+    }
+  }
+}
