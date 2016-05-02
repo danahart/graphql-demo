@@ -4,12 +4,12 @@ let ContactSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
   firstname: {type: String},
   lastname: {type: String},
+  phone: {type: String},
   address: [{
     address: {type: String},
     city: {type: String},
     state: {type: String},
-    zip: {type: String},
-    phone: {type: String}
+    zip: {type: String}
   }]
 });
 
@@ -19,7 +19,7 @@ ContactSchema.set('toJSON', {getters: true});
 
 function getAllContacts() {
   return new Promise((resolve, reject) => {
-    Contact.find({}).select('firstname lastname address.phone').exec((err,res) => {
+    Contact.find({}).select('firstname lastname phone').exec((err,res) => {
         console.log(res);
         console.log('err: '+err);
          err ? reject(err) : resolve(res);

@@ -14,20 +14,11 @@ export default class ContactList extends Component {
 
     const { contacts } = this.props;
     console.log('contacts: '+JSON.stringify(contacts.contact));
-    /*console.log('props: '+JSON.stringify(this.props));
-    console.log('props.state: '+JSON.stringify(this.props.state));
-    console.log('.state: '+JSON.stringify(this.state));
-    console.log('.contact: '+JSON.stringify(this.contact));
-    console.log('.contacts: '+JSON.stringify(this.contacts));
-    //console.log('contacts: '+JSON.stringify(contacts));
-    //console.log('contact: '+JSON.stringify(contact));
-    console.log('listing: '+JSON.stringify(listing));*/
 	if (contacts.contact && contacts.contact.length > 0) {
         return (
-            <div class="large-12 columns">
+            <div class="large-12 columns" id="contact-container">
                 {contacts.contact.map(function(person, i){
-                    console.log('person: '+person.firstname);
-                    <Person fname={person.firstname} lname={person.lastname} key={i}/>
+                    return <Person fname={person.firstname} lname={person.lastname} phone={person.phone} key={i}/>;
                 })}
             </div>
         );

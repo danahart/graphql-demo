@@ -23,8 +23,7 @@ let AddressType = new GraphQLObjectType({
     street: { type: GraphQLString },
     city: { type: GraphQLString },
     state: { type: GraphQLString },
-    zip: { type: GraphQLString },
-    phone: { type: GraphQLString }
+    zip: { type: GraphQLString }
   }
 });
 
@@ -34,6 +33,7 @@ let ContactType = new GraphQLObjectType({
     _id: { type: GraphQLString },
     firstname: { type: GraphQLString },
     lastname: { type: GraphQLString },
+    phone: {type: GraphQLString},
     address: {
         type: AddressType,
         description: "Address of contact or empty if they have none",
@@ -51,12 +51,7 @@ export let Schema = new GraphQLSchema({
       fields: {
         contact: {
           type: new GraphQLList(ContactType),
-          // `args` describes the arguments that the `user` query accepts
-          //args: {
-            //firstname: { name:'firstname', type: GraphQLString }
-          //},
           resolve: (root, {}) => {
-              //return Contact.getContactByFirstname(firstname);
               return Contact.getAllContacts();
 /*
                 return new Promise((resolve, reject) => {

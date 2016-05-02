@@ -8,15 +8,20 @@ export default class Person extends Component {
 
   render() {
 
-    const {fname, lname} = this.props.fname;
+    const {fname, lname, phone} = this.props;
 
-    console.log('fname: '+fname+ ' lname: '+lname);
     if(fname && lname){
 	       return(
-            <div><span>{fname}</span><span>{lname}</span></div>
+               <div class="row">
+                   <div class="large-6 columns">
+                       {fname} {lname}
+                  </div>
+                  <div class="large-6 columns">
+                    {phone}
+                  </div>
+              </div>
         );
     }else {
-        console.log('in else ');
         return null;
     }
   }

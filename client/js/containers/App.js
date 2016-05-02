@@ -9,14 +9,14 @@ import ActionTypes from '../constants/ActionTypes';
 class App extends Component {
 
  componentDidMount() {
-     var query = '{contact{firstname,lastname}}'; //address{phone}
+     var query = '{contact{firstname,lastname, phone}}'; //address{phone}
      this.props.fetchAllContacts(query, ActionTypes.REQUEST_CONTACTS);
  }
 
   render() {
       const contacts = this.props.contacts;
     return (
-      <div className="row">
+      <div id="contactList">
         <ContactList />
       </div>
     );
