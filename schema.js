@@ -10,24 +10,6 @@ import {
 import Contact from './contact';
 import {Types} from 'mongoose';
 
-export function getProjection (fieldASTs) {
-  return fieldASTs.selectionSet.selections.reduce((projections, selection) => {
-    projections[selection.name.value] = 1;
-
-    return projections;
-  }, {});
-}
-
-let AddressType = new GraphQLObjectType({
-  name: 'Address',
-  fields: {
-    street: { type: GraphQLString },
-    city: { type: GraphQLString },
-    state: { type: GraphQLString },
-    zip: { type: GraphQLString }
-  }
-});
-
 let ContactType = new GraphQLObjectType({
   name: 'Contact',
   fields: {
@@ -35,19 +17,32 @@ let ContactType = new GraphQLObjectType({
     firstname: { type: GraphQLString },
     lastname: { type: GraphQLString },
     phone: {type: GraphQLString},
-    address: {
-        type: AddressType,
-        description: "Address of contact or empty if they have none",
-        resolve: (root, {firstname}) => {
-            return Contact.getContactAddressByName(firstname);
-        }
-    }
+    street: {type: GraphQLString},
+    city: {type: GraphQLString},
+    state: {type: GraphQLString},
+    zip: {type: GraphQLString},
+    birthdate: {type: GraphQLString}
   }
+});
+
+let Mutations = ({
+    updatePhone: {
+      type: ContactType,
+      args: {
+          _id: {
+          type: GraphQLID
+        }
+      },
+      resolve: (root, {_id}) => {
+          console.log('in mutations');
+          return Contact.updateContactPhone(firstname);
+      }
+    }
 });
 
 let Queries = {
   address: {
-    type: AddressType,
+    type: ContactType,
     args: {
         firstname: {
         type: GraphQLString
@@ -56,53 +51,49 @@ let Queries = {
     name: 'address',
     description: 'address of contact',
     resolve: (root, {firstname}) => {
+        console.log('in queries');
         return Contact.getContactAddressByName(firstname);
     }
-    /*resolve: (contact, params, source, fieldASTs) => {
-        var projections = getProjection(fieldASTs);
-        return Contact.find({firstname:params.firstname}, projections);
-    }*/
   },
   contact: {
     type: new GraphQLList(ContactType),
-    resolve: (root, {}) => {
-        return Contact.getAllContacts();
+    args: {
+        firstname: {
+        type: GraphQLString
+      }
+    },
+    resolve: (root, {firstname}) => {
+        return Contact.getContactByFirstname(firstname);
     }
+  },
+  all: {
+      type: new GraphQLList(ContactType),
+      resolve: (root, {}) => {
+          return Contact.getAllContacts();
+      }
   }
+
 };
 
+let RootMutation = new GraphQLObjectType({
+  name: "RootMutation",
+
+  fields: () => ({
+    updatePhone: Mutations.updatePhone
+  })
+});
+
 let RootQuery = new GraphQLObjectType({
-  name: 'RootQuery',      //Return this type of object
+  name: 'RootQuery',
 
   fields: () => ({
     contact: Queries.contact,
-    address: Queries.address
+    address: Queries.address,
+    all: Queries.all
   })
 });
 
 export let Schema = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: RootMutation
 });
-/*
-export let Schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: 'Query',
-      fields: {
-        contact: {
-          type: new GraphQLList(ContactType),
-          resolve: (root, {}) => {
-              return Contact.getAllContacts();
-
-                //return new Promise((resolve, reject) => {
-                //    Contact.findOne({"firstname": firstname}).exec((err, res) => {
-                //    console.log(res);
-                //    console.log('err: '+err);
-                //     err ? reject(err) : resolve(res);
-                //    });
-                //  });
-
-              }
-        }
-      }
-    })
-});*/

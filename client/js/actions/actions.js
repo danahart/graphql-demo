@@ -10,7 +10,7 @@ function requestData() {
 
 function receiveData(data, ACTION_TYPE) {
     var x = {};
-
+    console.log('receiveData'+JSON.stringify(data));
     if(data && data.errorMessage) {
         return {
             type: ActionTypes.RECEIVE_ERROR,
@@ -35,43 +35,20 @@ function receiveError(err, ACTION_TYPE) {
     };
 }
 
-export function viewAddress(firstname){
+export function setCurrent(payload, ACTION_TYPE){
     return{
-        type: REQUEST_ADDRESS,
-        payload: firstname
-    }
-}
-
-export function fetchAllContacts(query, ACTION_TYPE) {
-    return (dispatch) => {
-
-        dispatch(requestData());
-        console.log('fetchAllContacts');
-        return fetch('http://localhost:3000/graphql?query='+query)
-            .then((req) => req.json())
-            .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
-            .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
-    }
-}
-
-export function fetchAddressForContact(query, ACTION_TYPE) {
-    return (dispatch) => {
-
-        dispatch(requestData());
-
-        return fetch('http://localhost:3000/graphql?query='+query)
-            .then((req) => req.json())
-            .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
-            .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
+        type: ACTION_TYPE,
+        payload: payload
     }
 }
 
 export function fetchData(query, ACTION_TYPE) {
+    //console.log('ACTION_TYPE '+ACTION_TYPE);
     return (dispatch) => {
 
         dispatch(requestData());
 
-        return fetch('/graphql?query'+query)
+        return fetch('http://localhost:3000/graphql?query='+query)
             .then((req) => req.json())
             .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
             .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));

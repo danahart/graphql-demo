@@ -11,40 +11,41 @@ export default class Person extends Component {
     super(props, context);
   }
 
-  viewAddress(name, e){
-      console.log('name: '+name.value);
-      var query = '{address(firstname: "'+name+'"){street, city, state, zip}}'; //address{phone}
-      this.props.fetchAddressForContact(query, ActionTypes.REQUEST_ADDRESS);
+  showAddress(name, e){
+      var query = '{contact(firstname: "'+name+'"){street, city, state, zip}}'; //address{phone}
+      this.props.fetchData(query, ActionTypes.REQUEST_ADDRESS);
+      this.props.setCurrent({showAddress: true, currentContact: name}, ActionTypes.SET_CURRENT);
   }
 
   render() {
 
-    const {fname, lname, phone, address} = this.props;
+    const {contacts, viewAddress, currentAddress, fname, lname, phone} = this.props;
 
     if(fname && lname){
-        if(address){
-            let boundNameClick = this.viewAddress.bind(this, fname);
+        let boundNameClick = this.showAddress.bind(this, fname);
+        if(this.props.viewAddress && fname == this.props.currentContact){
 	       return(
                <div>
                <div class="row">
-                   <div class="large-6 columns">
+                   <div class="large-5 columns">
                        <span id={fname} onClick={boundNameClick}>{fname} {lname}</span>
                   </div>
-                  <div class="large-6 columns">
+                  <div class="large-5 columns">
                     {phone}
                   </div>
               </div>
-              <AddressCard address={address}/>
+              <AddressCard address={this.props.currentAddress}/>
               </div>
           );
           }
           else{
+
               return(
                   <div class="row">
-                      <div class="large-6 columns">
-                          <span id={fname} onClick={this.viewAddress.bind(this)}>{fname} {lname}</span>
+                      <div class="large-5 columns">
+                          <span id={fname} onClick={boundNameClick}>{fname} {lname}</span>
                      </div>
-                     <div class="large-6 columns">
+                     <div class="large-5 columns">
                        {phone}
                      </div>
                  </div>
@@ -58,7 +59,10 @@ export default class Person extends Component {
 
 function mapStateToProps(state) {
   return {
-    state: state
+    contacts: state.contacts,
+    viewAddress: state.contacts.viewAddress,
+    currentAddress: state.contacts.currentAddress,
+    currentContact: state.contacts.currentContact
   };
 }
 

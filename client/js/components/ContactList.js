@@ -13,7 +13,7 @@ export default class ContactList extends Component {
   render() {
 
     const { contacts } = this.props;
-    console.log('contacts: '+JSON.stringify(contacts.contact));
+    //console.log('contacts: '+JSON.stringify(contacts.contact));
 	if (contacts.contact && contacts.contact.length > 0) {
         return (
             <div class="large-12 columns" id="contact-container">
@@ -21,7 +21,6 @@ export default class ContactList extends Component {
                     return <Person fname={person.firstname}
                                     lname={person.lastname}
                                     phone={person.phone}
-                                    address={person.address}
                                     key={i}
                             />;
                 })}
@@ -37,7 +36,7 @@ export default class ContactList extends Component {
 
 function mapStateToProps(state) {
   return {
-    contacts: state.contacts //called out in reducers/index.js
+    contacts: state.contacts
   };
 }
 
