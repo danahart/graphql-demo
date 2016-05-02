@@ -1,24 +1,26 @@
 import types from '../constants/ActionTypes';
 
 const initialState = {
-  "firstname": null,
-  "lastname": null,
   "street": null,
   "city": null,
   "state": null,
-  "zip": null,
-  "phone": null
+  "zip": null
 };
 
 export default function example(state = initialState, action) {
     switch (action.type) {
 
-	    case types.RECEIVE_DATA:
-	    	console.log('RECEIVE_DATA: '+ JSON.strinify(action.payload));
-	        return Object.assign({}, state, {state: action.payload.address.state, phone: action.payload.address.phone});
+        case types.REQUEST_ADDRESS:
+	    	console.log('REQUEST_ADDRESS: '+ JSON.stringify(action.payload));
+	        return Object.assign({}, state,
+                {
+                    street: action.payload.data.address.street,
+                    city: action.payload.data.address.city,
+                    state: action.payload.data.address.state,
+                    zip: action.payload.data.address.zip 
+                });
 
 	    default:
-            //console.log('just returning state');
 	        return state;
     }
 

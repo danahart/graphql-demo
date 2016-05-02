@@ -35,6 +35,13 @@ function receiveError(err, ACTION_TYPE) {
     };
 }
 
+export function viewAddress(firstname){
+    return{
+        type: REQUEST_ADDRESS,
+        payload: firstname
+    }
+}
+
 export function fetchAllContacts(query, ACTION_TYPE) {
     return (dispatch) => {
 

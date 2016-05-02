@@ -18,7 +18,12 @@ export default class ContactList extends Component {
         return (
             <div class="large-12 columns" id="contact-container">
                 {contacts.contact.map(function(person, i){
-                    return <Person fname={person.firstname} lname={person.lastname} phone={person.phone} key={i}/>;
+                    return <Person fname={person.firstname}
+                                    lname={person.lastname}
+                                    phone={person.phone}
+                                    address={person.address}
+                                    key={i}
+                            />;
                 })}
             </div>
         );

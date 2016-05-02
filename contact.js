@@ -37,8 +37,19 @@ function getContactByFirstname(name) {
   });
 }
 
+function getContactAddressByName(name) {
+  return new Promise((resolve, reject) => {
+    Contact.find({firstname:name}).select('address.street address.city, address.state address.zip').exec((err,res) => {
+        console.log('getContactAddressByName '+JSON.stringify(res));
+        console.log('err: '+err);
+         err ? reject(err) : resolve(res);
+    });
+  });
+}
+
 exports.getAllContacts = getAllContacts;
 exports.getContactByFirstname = getContactByFirstname;
+exports.getContactAddressByName = getContactAddressByName;
 
 exports.ContactSchema = Contact;
 //export default Contact;

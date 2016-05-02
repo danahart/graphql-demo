@@ -12,7 +12,6 @@ const contact = (state = initialState, action) => {
 	        return Object.assign({}, state, {contact: action.payload.data.contact});
 
 	    default:
-            console.log('just returning state');
 	        return state;
     }
 }
