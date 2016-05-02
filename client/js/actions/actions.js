@@ -1,4 +1,4 @@
-import ActionTypes from '../contstants/ActionTypes'; //rename proper spelling!!!
+import ActionTypes from '../constants/ActionTypes';
 import fetch from 'isomorphic-fetch';
 
 function requestData() {
@@ -35,21 +35,38 @@ function receiveError(err, ACTION_TYPE) {
     };
 }
 
+export function fetchAllContacts(query, ACTION_TYPE) {
+    return (dispatch) => {
+
+        dispatch(requestData());
+        console.log('fetchAllContacts');
+        return fetch('http://localhost:3000/graphql?query='+query)
+            .then((req) => req.json())
+            .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
+            .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
+    }
+}
+
+export function fetchAddressForContact(query, ACTION_TYPE) {
+    return (dispatch) => {
+
+        dispatch(requestData());
+
+        return fetch('http://localhost:3000/graphql?query='+query)
+            .then((req) => req.json())
+            .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
+            .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
+    }
+}
+
 export function fetchData(query, ACTION_TYPE) {
     return (dispatch) => {
 
         dispatch(requestData());
 
-        return fetch('/graphql?query'+query,
-            {
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With':'XMLHttpRequest'
-            }
-        }).then((req) => req.json())
+        return fetch('/graphql?query'+query)
+            .then((req) => req.json())
             .then((json) => dispatch(receiveData(json, ACTION_TYPE)))
-                .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
+            .catch((err) => dispatch(receiveError(err, ACTION_TYPE)));
     }
 }

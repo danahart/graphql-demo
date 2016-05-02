@@ -1,21 +1,23 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from '../reducers';
 import thunk from 'redux-thunk';
 
-export default function configureStore(initialState) {
-  const store = createStore(
-    rootReducer,
-    initialState,
-    compose(
-      applyMiddleware(thunk)
-    )
-  );
+const IS_BROWSER = typeof window !== 'undefined';
+const middleware = IS_BROWSER ? [thunk] : [thunk];
 
-  if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers').default)
-    );
-  }
+export default function configureStore(initialState = {}) {
 
-  return store;
+    const store = createStore(rootReducer, initialState, compose(
+        applyMiddleware(...middleware),
+        IS_BROWSER && window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    ));
+
+    if (module.hot) {
+        module.hot.accept('../reducers', () => {
+            const nextRootReducer = require('../reducers').default;
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+
+    return store;
 }

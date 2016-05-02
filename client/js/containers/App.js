@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Contacts from '../components/ContactList';
+import ContactList from '../components/ContactList';
 import * as actions from '../actions/actions';
-import ActionTypes from '../contstants/ActionTypes'; //rename folder proper spelling!!!!
+import ActionTypes from '../constants/ActionTypes';
 
 class App extends Component {
 
  componentDidMount() {
-  var query = '{contact(id:"2"){name,address{phone}}}';
-   this.props.fetchData(query, ActionTypes.REQUEST_DATA);
-  }
+     var query = '{contact{firstname,lastname}}'; //address{phone}
+     this.props.fetchAllContacts(query, ActionTypes.REQUEST_CONTACTS);
+ }
 
   render() {
-
+      const contacts = this.props.contacts;
     return (
       <div className="row">
-        <Contacts listing={this.props.state.contact}/>
+        <ContactList />
       </div>
     );
   }
@@ -25,7 +25,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    state: state.contacts //called out in reducers/index.js
+    contacts: state.contacts //called out in reducers/index.js
   };
 }
 

@@ -9,6 +9,14 @@ import {
 import Contact from './contact';
 import {Types} from 'mongoose';
 
+export function getProjection (fieldASTs) {
+  return fieldASTs.selectionSet.selections.reduce((projections, selection) => {
+    projections[selection.name.value] = 1;
+
+    return projections;
+  }, {});
+}
+
 let AddressType = new GraphQLObjectType({
   name: 'Address',
   fields: {
@@ -26,7 +34,14 @@ let ContactType = new GraphQLObjectType({
     _id: { type: GraphQLString },
     firstname: { type: GraphQLString },
     lastname: { type: GraphQLString },
-    address: {type: AddressType}
+    address: {
+        type: AddressType,
+        description: "Address of contact or empty if they have none",
+        resolve: (contact, params, source, fieldASTs) => {
+            var projections = getProjection(fieldASTs);
+            return Contact.find({_id:contact._id}, projections);
+        }
+    }
   }
 });
 
@@ -37,11 +52,12 @@ export let Schema = new GraphQLSchema({
         contact: {
           type: new GraphQLList(ContactType),
           // `args` describes the arguments that the `user` query accepts
-          args: {
-            firstname: { name:'firstname', type: GraphQLString }
-          },
-          resolve: (root, {firstname}) => {
-              return Contact.getContactByFirstname(firstname);
+          //args: {
+            //firstname: { name:'firstname', type: GraphQLString }
+          //},
+          resolve: (root, {}) => {
+              //return Contact.getContactByFirstname(firstname);
+              return Contact.getAllContacts();
 /*
                 return new Promise((resolve, reject) => {
                     Contact.findOne({"firstname": firstname}).exec((err, res) => {

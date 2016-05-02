@@ -17,6 +17,16 @@ let Contact = mongoose.model('Contact', ContactSchema, 'contact');
 
 ContactSchema.set('toJSON', {getters: true});
 
+function getAllContacts() {
+  return new Promise((resolve, reject) => {
+    Contact.find({}).select('firstname lastname address.phone').exec((err,res) => {
+        console.log(res);
+        console.log('err: '+err);
+         err ? reject(err) : resolve(res);
+    });
+  });
+}
+
 function getContactByFirstname(name) {
   return new Promise((resolve, reject) => {
     Contact.find({firstname:name}).exec((err,res) => {
@@ -27,6 +37,7 @@ function getContactByFirstname(name) {
   });
 }
 
+exports.getAllContacts = getAllContacts;
 exports.getContactByFirstname = getContactByFirstname;
 
 exports.ContactSchema = Contact;

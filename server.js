@@ -8,17 +8,19 @@ import config from'./webpack.config';
 import {Schema} from './schema';
 import GraphQLHTTP from 'express-graphql';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 let app = express();
+let appServer = express();
 let compiler = webpack(config);
 
 const MONGO_URL = 'mongodb://localhost:27017/addressbook';
 
-
+appServer.use(cors());
 app.use(fallback());
 
 app.use(webpackDevMiddleware(compiler, {
-  quiet: false,
+  quiet: true,
   noInfo: false,
   stats: {
     colors: true
@@ -27,7 +29,7 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-express().use('/graphql', GraphQLHTTP({
+appServer.use('/graphql', GraphQLHTTP({
   schema: Schema,
   pretty: true,
   graphiql: true

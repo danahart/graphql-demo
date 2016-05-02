@@ -71,23 +71,3 @@ module.exports = {
     }
 
 };
-/*module.exports = {
-    entry: "./server.js",
-    output: {
-        path: __dirname,
-        filename: "bundle.js"
-    },
-    //loaders...
-    module:{
-        loaders : [
-            {
-                test: /\.js?$/,
-                loader: 'babel-loader',
-                exclude: /(node_modules|public|react|fbjs)/,
-                query: {
-                    presets: ['react', 'es2015']
-                }
-            }
-        ]
-    }
-}*/
