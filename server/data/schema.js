@@ -31,11 +31,14 @@ let Mutations = ({
       args: {
           _id: {
           type: GraphQLID
+        },
+        phone: {
+            type: GraphQLString
         }
       },
-      resolve: (root, {_id}) => {
+      resolve: (root, {_id, phone}) => {
           console.log('in mutations');
-          return Contact.updateContactPhone(firstname);
+          return Contact.updateContactPhone(_id, phone);
       }
     }
 });

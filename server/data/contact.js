@@ -48,12 +48,11 @@ function getContactAddressByName(name) {
   });
 }
 
-function updateContactPhone(id, phone ) {
+function updateContactPhone(_id, phone) {
   return new Promise((resolve, reject) => {
-    var query = {firstname: name};
-    Contact.update({_id:id}, {phone:phone}, function(err,res){
-        //console.log('updateContactPhone '+JSON.stringify(res));
-        //console.log('err: '+err);
+    Contact.update({_id:_id}, {phone:phone}, function(err,res){
+        console.log('updateContactPhone '+JSON.stringify(res));
+        console.log('err: '+err);
          err ? reject(err) : resolve(res);
     });
   });
@@ -62,5 +61,6 @@ function updateContactPhone(id, phone ) {
 exports.getAllContacts = getAllContacts;
 exports.getContactByFirstname = getContactByFirstname;
 exports.getContactAddressByName = getContactAddressByName;
+exports.updateContactPhone = updateContactPhone;
 
 exports.ContactSchema = Contact;
