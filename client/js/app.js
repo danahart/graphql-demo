@@ -7,7 +7,6 @@ import configureStore from './store/configureStore';
 import Root from './containers/Root';
 
 const store = configureStore(window.__INITIAL_STATE__);
-//store.dispath(fetchAllContacts(ActionTypes.REQUEST_CONTACTS));
 
 render(
   <Root store={store} />,

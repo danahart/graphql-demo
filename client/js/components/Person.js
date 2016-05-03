@@ -12,7 +12,7 @@ export default class Person extends Component {
   }
 
   showAddress(name, e){
-      var query = '{contact(firstname: "'+name+'"){street, city, state, zip}}'; //address{phone}
+      var query = '{contact(firstname: "'+name+'"){street, city, state, zip}}';
       this.props.fetchData(query, ActionTypes.REQUEST_ADDRESS);
       this.props.setCurrent({showAddress: true, currentContact: name}, ActionTypes.SET_CURRENT);
   }
@@ -26,13 +26,16 @@ export default class Person extends Component {
         if(this.props.viewAddress && fname == this.props.currentContact){
 	       return(
                <div>
-               <div class="row">
-                   <div class="large-5 columns">
+               <div className="row">
+                   <div className="large-2 columns"></div>
+                   <div className="large-3 columns">
                        <span id={fname} onClick={boundNameClick}>{fname} {lname}</span>
                   </div>
-                  <div class="large-5 columns">
+                  <div className="large-3 columns">
                     {phone}
                   </div>
+                  <div className="large-4 columns"></div>
+
               </div>
               <AddressCard address={this.props.currentAddress}/>
               </div>
@@ -41,13 +44,15 @@ export default class Person extends Component {
           else{
 
               return(
-                  <div class="row">
-                      <div class="large-5 columns">
+                  <div className="row">
+                      <div className="large-2 columns"></div>
+                      <div className="large-3 columns">
                           <span id={fname} onClick={boundNameClick}>{fname} {lname}</span>
                      </div>
-                     <div class="large-5 columns">
+                     <div className="large-3 columns">
                        {phone}
                      </div>
+                     <div className="large-4 columns"></div>
                  </div>
              );
           }

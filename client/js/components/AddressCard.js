@@ -14,14 +14,16 @@ export default class AddressCard extends Component {
 
     if(address){
 	       return(
-               <div class="row">
-                   <div class="large-8 columns">
-                       <span>{address.street} {address.city}, {address.state} {address.zip}</span>
-                  </div>
-                  <div class="large-4 columns">
-                    close
-                  </div>
-              </div>
+              <div className="row">
+                  <div className="large-3 columns"></div>
+                  <div className="large-5 columns">
+                      {address.street} {address.city}, {address.state} {address.zip}
+                 </div>
+                 <div className="large-1 columns">
+                     close
+                 </div>
+                 <div className="large-3 columns"></div>
+             </div>
           );
 
     }else {

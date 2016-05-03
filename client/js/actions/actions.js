@@ -43,7 +43,6 @@ export function setCurrent(payload, ACTION_TYPE){
 }
 
 export function fetchData(query, ACTION_TYPE) {
-    //console.log('ACTION_TYPE '+ACTION_TYPE);
     return (dispatch) => {
 
         dispatch(requestData());

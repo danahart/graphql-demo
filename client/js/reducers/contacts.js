@@ -16,7 +16,7 @@ const contact = (state = initialState, action) => {
     switch (action.type) {
 
 	    case types.REQUEST_ALL_CONTACTS:
-            console.log('REQUEST_ALL_CONTACTS: '+JSON.stringify(action.payload));
+            //console.log('REQUEST_ALL_CONTACTS: '+JSON.stringify(action.payload));
 	        return Object.assign({}, state, {contact: action.payload.data.all});
 
         case types.REQUEST_ADDRESS:
@@ -30,11 +30,11 @@ const contact = (state = initialState, action) => {
             });
 
         case types.SHOW_ADDRESS_VIEW:
-            console.log('SHOW_ADDRESS_VIEW: '+JSON.stringify(action.payload));
+            //console.log('SHOW_ADDRESS_VIEW: '+JSON.stringify(action.payload));
         	return Object.assign({}, state, {viewAddress: action.payload});
 
         case types.SET_CURRENT:
-            console.log('SET_CURRENT: '+JSON.stringify(action.payload));
+            //console.log('SET_CURRENT: '+JSON.stringify(action.payload));
             return Object.assign({}, state, {
                 currentContact: action.payload.currentContact,
                 viewAddress: action.payload.showAddress});

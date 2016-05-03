@@ -16,7 +16,7 @@ class App extends Component {
   render() {
       const contacts = this.props.contacts;
     return (
-      <div id="contactList">
+      <div class="row" id="contactList">
         <ContactList />
       </div>
     );

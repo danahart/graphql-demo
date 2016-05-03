@@ -13,10 +13,9 @@ export default class ContactList extends Component {
   render() {
 
     const { contacts } = this.props;
-    //console.log('contacts: '+JSON.stringify(contacts.contact));
 	if (contacts.contact && contacts.contact.length > 0) {
         return (
-            <div class="large-12 columns" id="contact-container">
+            <div className="large-12 columns" id="contact-container">
                 {contacts.contact.map(function(person, i){
                     return <Person fname={person.firstname}
                                     lname={person.lastname}

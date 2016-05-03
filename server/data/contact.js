@@ -31,8 +31,8 @@ function getAllContacts() {
 function getContactByFirstname(name) {
   return new Promise((resolve, reject) => {
     Contact.find({firstname:name}).exec((err,res) => {
-        console.log(res);
-        console.log('err: '+err);
+        //console.log('getContactByFirstname: '+res);
+        //console.log('err: '+err);
          err ? reject(err) : resolve(res);
     });
   });
@@ -41,8 +41,8 @@ function getContactByFirstname(name) {
 function getContactAddressByName(name) {
   return new Promise((resolve, reject) => {
     Contact.find({firstname:name}).exec((err,res) => {
-        console.log('getContactAddressByName '+JSON.stringify(res));
-        console.log('err: '+err);
+        //console.log('getContactAddressByName '+JSON.stringify(res));
+        //console.log('err: '+err);
          err ? reject(err) : resolve(res);
     });
   });
@@ -52,8 +52,8 @@ function updateContactPhone(id, phone ) {
   return new Promise((resolve, reject) => {
     var query = {firstname: name};
     Contact.update({_id:id}, {phone:phone}, function(err,res){
-        console.log('updateContactPhone '+JSON.stringify(res));
-        console.log('err: '+err);
+        //console.log('updateContactPhone '+JSON.stringify(res));
+        //console.log('err: '+err);
          err ? reject(err) : resolve(res);
     });
   });
@@ -64,4 +64,3 @@ exports.getContactByFirstname = getContactByFirstname;
 exports.getContactAddressByName = getContactAddressByName;
 
 exports.ContactSchema = Contact;
-//export default Contact;
