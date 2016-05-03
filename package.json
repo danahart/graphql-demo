@@ -2,7 +2,7 @@
   "name": "graphql-demo",
   "version": "1.0.0",
   "description": "address book demo",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && babel index.js && cross-env NODE_ENV=development webpack --config webpack.config.js",
